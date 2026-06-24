@@ -42,6 +42,9 @@
             font-size: 1.6rem;
             font-weight: bold;
             color: #2c3e50;
+            /* 拡大縮小の動きを完全に禁止する設定 */
+            transform: none !important;
+            transition: none !important;
         }
         button {
             background-color: #0097a7;
@@ -52,24 +55,25 @@
             font-weight: bold;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.1s ease, background-color 0.2s ease;
             box-shadow: 0 4px 6px rgba(0, 151, 167, 0.3);
             width: 100%;
+            /* スマホで連打したときの標準のズーム（拡大）を防止 */
+            touch-action: manipulation;
         }
         button:hover {
             background-color: #0097a7;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 121, 107, 0.4);
         }
         button:active {
-            transform: translateY(0);
+            /* ボタンを押したときだけ、ボタン自体が少し凹む演出（文字は拡大しません） */
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>今回のお題</h1>
+    <h1>🎲 本日のお題</h1>
     
     <div class="display-window">
         <div id="odai-display">ボタンを押してね</div>
@@ -79,86 +83,27 @@
 </div>
 
 <script>
-// 元から入っているお題のリスト
+    // 提供いただいたお題のリスト
     const odaiList = [
-        "M!LK",
-        "Vaundy",
-        "Mrs. GREEN APPLE",
-        "YOASOBI",
-        "嵐",
-        "米津玄師",
-        "鎌倉",
-        "北海道",
-        "沖縄",
-        "大阪",
-        "東京",
-        "アメリカ",
-        "イギリス",
-        "ディズニー",
-        "USJ",
-        "ジブリ",
-        "サンリオ",
-        "水族館",
-        "動物園",
-        "遊園地",
-        "富士急",
-        "コナン",
-        "アンパンマン",
-        "トイ・ストーリー",
-        "日テレ",
-        "マクドナルド",
-        "スターバックス",
-        "ミスタードーナツ",
-        "干支",
-        "星座",
-        "宇宙",
-        "学校",
-        "音楽室",
-        "体育館",
-        "保健室",
-        "体育祭",
-        "文化祭",
-        "修学旅行",
-        "卒業式",
-        "春",
-        "夏",
-        "秋",
-        "冬",
-        "お正月",
-        "クリスマス",
-        "ハロウィン",
-        "お花見",
-        "夏祭り",
-        "梅雨",
-        "医者",
-        "教師",
-        "消防士",
-        "警察官",
-        "パティシエ",
-        "美容師",
-        "娯楽",
-        "カラオケ",
-        "映画館",
-        "ゲームセンター",
-        "ボウリング",
-        "コンビニ",
-        "オーケストラ",
-        "天気",
-        "文房具",
-        "スーパー",
-        "図書館",
-        "ファミレス",
-        "アルバイト",
-        "空港",
-        "引っ越し",
-        "誕生日",
-        "結婚式"
+        "M!LK", "Vaundy", "Mrs. GREEN APPLE", "YOASOBI", "嵐", "米津玄師",
+        "鎌倉", "北海道", "沖縄", "大阪", "東京", "アメリカ", "イギリス",
+        "ディズニー", "USJ", "ジブリ", "サンリオ", "水族館", "動物園",
+        "遊園地", "富士急", "コナン", "アンパンマン", "トイ・ストーリー",
+        "日テレ", "マクドナルド", "スターバックス", "ミスタードーナツ",
+        "干支", "星座", "宇宙", "学校", "音楽室", "体育館", "保健室",
+        "体育祭", "文化祭", "修学旅行", "卒業式", "春", "夏", "秋", "冬",
+        "お正月", "クリスマス", "ハロウィン", "お花見", "夏祭り", "梅雨",
+        "医者", "教師", "消防士", "警察官", "パティシエ", "美容師",
+        "娯楽", "カラオケ", "映画館", "ゲームセンター", "ボウリング",
+        "コンビニ", "オーケストラ", "天気", "文房具", "スーパー",
+        "図書館", "ファミレス", "アルバイト", "空港", "引っ越し",
+        "誕生日", "結婚式"
     ];
 
     function getOdai() {
         const display = document.getElementById("odai-display");
         
-        // ランダムにお題を1つ選んで表示
+        // ランダムにお題を1つ選んで表示（サイズ変更の処理はすべて削除しました）
         const randomIndex = Math.floor(Math.random() * odaiList.length);
         display.innerText = odaiList[randomIndex];
     }
